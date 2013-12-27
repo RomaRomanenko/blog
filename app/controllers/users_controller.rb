@@ -14,6 +14,7 @@ class UsersController < ApplicationController
       redirect_to root_url, :notice => "Signed up!"
     else
       render "new"
+    end
   end
 
   def edit
@@ -29,6 +30,4 @@ class UsersController < ApplicationController
     User.find(params[:id]).destroy
     redirect_to users_path
   end
-
- end
 end
