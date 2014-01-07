@@ -10,6 +10,7 @@ gem 'pry'
 gem 'twitter-bootstrap-rails'
 gem 'bootstrap-sass', '2.1'
 gem "bcrypt-ruby", :require => "bcrypt"
+gem 'jquery-rails', '>=0.2.5'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -27,8 +28,6 @@ end
 group :development do
   gem 'thin'
 end
-
-gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

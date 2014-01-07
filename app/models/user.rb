@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   	validates :first_name, :last_name, presence: true
   	validates :email, presence: true, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i }
 
-	def self.authenticate(email, password)
+	  def self.authenticate(email, password)
     	user = find_by_email(email)
     	if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
       		user
@@ -26,4 +26,13 @@ class User < ActiveRecord::Base
       		self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
     	end
   	end
+
+    def self.search(search)
+      if search
+        where('first_name LIKE ?', "%#{search}%")
+      else
+        scoped
+      end
+    end
+    
 end
