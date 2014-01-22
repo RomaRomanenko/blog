@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   helper_method :sort_column, :sort_direction
 
-  skip_before_filter :require_login, only: [:new, :create]
+  skip_before_filter :require_login, only: [:index, :new, :create]
   
   def index
     @users = User.order(sort_column + " " + sort_direction)
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
-      redirect_to log_in_path, :notice => "Signed up!"
+      redirect_to users_path, :notice => "Signed up!"
     else
       render "new"
     end
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
 
   def destroy
     User.find(params[:id]).destroy
-    redirect_to users_path
+    redirect_to users_path   
   end
 
   private

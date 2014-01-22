@@ -3,6 +3,3 @@
 <%= form_tag users_path, method: :get, id: 'users_search' do %> 
   <div id='users'><%= render 'users' %></div>
 <% end %>
-
-
-<p><%= link_to 'Add New User', new_user_path, remote: true %></p>
