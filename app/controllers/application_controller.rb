@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     	unless current_user
       		flash[:error] = 'Please login'
       		respond_to do |format|
-        		format.html { redirect_to new_session_path }
+        	format.html { redirect_to new_session_path }
       		end
     	end
   	end

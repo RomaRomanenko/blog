@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
   helper_method :sort_column, :sort_direction
-
+  before_filter :find_user, only: [:edit, :update, :destroy]
   skip_before_filter :require_login, only: [:index, :new, :create]
-  
+
   def index
-    @users = User.order(sort_column + " " + sort_direction)
+    @users = User.order("#{sort_column} #{sort_direction}")
   end
 
   def new
@@ -21,27 +21,32 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
-    @user = User.find(params[:id])
-  end
-
   def update
-    @user = User.find(params[:id])
     render :edit unless @user.update_attributes(params[:user])
   end
 
   def destroy
-    User.find(params[:id]).destroy
-    redirect_to users_path   
+    @user.destroy if @user
+  end
+
+  def sort
+    params[:user].each_with_index do |id, index|
+      User.update_all({position: index+1}, {id: id})
+    end
+    render nothing: true
   end
 
   private
 
   def sort_column
-    params[:sort] || "first_name"
+    params[:sort].present? ? params[:sort] : "position"
   end
 
   def sort_direction
     params[:direction] || "asc"
+  end
+
+  def find_user
+    @user = User.find(params[:id])
   end
 end
